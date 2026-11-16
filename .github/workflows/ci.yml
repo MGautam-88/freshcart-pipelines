@@ -27,4 +27,9 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run pytest
-        run: python -m pytest -v
+        run: |
+          if find . -type f \( -name 'test_*.py' -o -name '*_test.py' \) | grep -q .; then
+            python -m pytest -v
+          else
+            echo "No test files found; skipping pytest for this bootstrap commit."
+          fi
